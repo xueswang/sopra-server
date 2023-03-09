@@ -176,7 +176,7 @@ public class UserControllerTest {
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setUsername("testUsernameNew");
 
-        MockHttpServletRequestBuilder putRequest = put("/users/{userId}", 1L)
+        MockHttpServletRequestBuilder putRequest = put("/users/{userId")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(userPutDTO));
 
@@ -184,30 +184,22 @@ public class UserControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-//    @Test
-//    public void editUser_invalidInput_userNotEdited() throws Exception {
-////        User user = new User();
-////        user.setId(1L);
-////        user.setPassword("testPassword");
-////        user.setUsername("testUsername");
-////        user.setToken("1");
-////        user.setStatus(UserStatus.ONLINE);
-//
-//        ResponseStatusException error = new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                "The user to be inspected does not exist.");
-//        given(userService.findUser(1l)).willThrow(error);
-//
-//        UserPutDTO userPutDTO = new UserPutDTO();
-//        userPutDTO.setId(1L);
-////        userPutDTO.setUsername("testUsernameNew");
-//
-//        MockHttpServletRequestBuilder putRequest = put("/users/{userId}", 1L)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(asJsonString(userPutDTO));
-//
-//        mockMvc.perform(putRequest)
-//                .andExpect(status().isNotFound());
-//    }
+    @Test
+    public void editUser_invalidInput_userNotEdited() throws Exception {
+        ResponseStatusException error = new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "The user to be inspected does not exist.");
+        willThrow(error).given(userService).updateUser(Mockito.any());
+
+        UserPutDTO userPutDTO = new UserPutDTO();
+        userPutDTO.setUsername("testUsernameNew");
+
+        MockHttpServletRequestBuilder putRequest = put("/users/{userId}", 2L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(userPutDTO));
+
+        mockMvc.perform(putRequest)
+                .andExpect(status().isNotFound());
+    }
 
     /**
      * Helper Method to convert userPostDTO into a JSON string such that the input
