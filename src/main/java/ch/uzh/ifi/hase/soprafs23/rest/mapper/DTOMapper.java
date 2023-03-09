@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs23.rest.mapper;
 import ch.uzh.ifi.hase.soprafs23.entity.User;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPostDTO;
+import ch.uzh.ifi.hase.soprafs23.rest.dto.UserPutDTO;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -20,15 +21,31 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface DTOMapper {
 
-  DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
+    DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
-  @Mapping(source = "name", target = "name")
-  @Mapping(source = "username", target = "username")
-  User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "username", target = "username")
+//    @Mapping(source = "status", target = "status", ignore = true)
+//    @Mapping(source = "creation_date", target = "creation_date", ignore = true)
+//    @Mapping(source = "birthday", target = "birthday", ignore = true)
+//    @Mapping(source = "token", target = "token", ignore = true)
+    User convertUserPostDTOtoEntity(UserPostDTO userPostDTO);
 
-  @Mapping(source = "id", target = "id")
-  @Mapping(source = "name", target = "name")
-  @Mapping(source = "username", target = "username")
-  @Mapping(source = "status", target = "status")
-  UserGetDTO convertEntityToUserGetDTO(User user);
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "creation_date", target = "creation_date")
+    @Mapping(source = "birthday", target = "birthday")
+    @Mapping(source = "token", target = "token")
+    UserGetDTO convertEntityToUserGetDTO(User user);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "password", target = "password")
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "status", target = "status")
+    @Mapping(source = "creation_date", target = "creation_date")
+    @Mapping(source = "birthday", target = "birthday")
+    @Mapping(source = "token", target = "token")
+    User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 }
